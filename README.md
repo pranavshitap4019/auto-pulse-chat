@@ -1,6 +1,79 @@
-# Welcome to your Lovable project
+# Vehicle Health Dashboard
 
-## Project info
+A real-time vehicle monitoring dashboard with AI-powered chatbot support and predictive analytics.
+
+## Features
+
+- 🚗 **Real-time Vehicle Monitoring**: Live updates every 10 seconds
+- 🤖 **AI Chatbot**: Interactive assistant for vehicle diagnostics  
+- 📊 **Predictive Analytics**: Battery health prediction and maintenance insights
+- 📱 **Responsive Design**: Works on desktop, tablet, and mobile
+- 🎨 **Modern UI**: Automotive-themed design with status indicators
+
+## API Integration
+
+The dashboard integrates with localhost API endpoints to fetch real-time vehicle data.
+
+### Required API Endpoints
+
+#### GET /api/vehicle/status
+Returns current vehicle status data:
+
+```json
+{
+  "battery": {
+    "level": 87,
+    "temperature": 32
+  },
+  "engine": {
+    "temperature": 195,
+    "oilPressure": 45
+  },
+  "brakes": {
+    "fluidLevel": 85
+  },
+  "tires": {
+    "pressure": 31
+  }
+}
+```
+
+### Setting up Local API Server
+
+To test with real data, you'll need a local API server running on `localhost:3001`. Here's a simple Express.js example:
+
+```javascript
+const express = require('express');
+const cors = require('cors');
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+// Mock vehicle data endpoint
+app.get('/api/vehicle/status', (req, res) => {
+  res.json({
+    battery: {
+      level: Math.floor(Math.random() * 100),
+      temperature: Math.floor(Math.random() * 25) + 20
+    },
+    engine: {
+      temperature: Math.floor(Math.random() * 40) + 180,
+      oilPressure: Math.floor(Math.random() * 30) + 30
+    },
+    brakes: {
+      fluidLevel: Math.floor(Math.random() * 100)
+    },
+    tires: {
+      pressure: Math.floor(Math.random() * 10) + 25
+    }
+  });
+});
+
+app.listen(3001, () => {
+  console.log('Vehicle API server running on http://localhost:3001');
+});
+```
 
 **URL**: https://lovable.dev/projects/c063f8c8-514d-4e6f-bd6d-95d2a4ab6c73
 

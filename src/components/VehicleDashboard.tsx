@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { VehicleMetricCard } from "./VehicleMetricCard";
 import { StatusBadge } from "./StatusBadge";
-import { Battery, Thermometer, Disc, Gauge, Wifi, Clock } from "lucide-react";
+import { Battery, Thermometer, Disc, Gauge, Wifi, Clock, AlertCircle } from "lucide-react";
 import vehicleHeroImage from "@/assets/vehicle-dashboard-hero.jpg";
+import { useToast } from "@/hooks/use-toast";
 
 interface VehicleData {
   batteryLevel: number;
@@ -18,29 +19,64 @@ interface VehicleData {
 
 export function VehicleDashboard() {
   const [vehicleData, setVehicleData] = useState<VehicleData>({
-    batteryLevel: 87,
-    batteryTemp: 32,
-    engineTemp: 195,
-    oilPressure: 45,
-    brakeSystem: 15,
-    tirePressure: 31,
-    lastUpdate: "Now",
-    isConnected: true,
+    batteryLevel: 0,
+    batteryTemp: 0,
+    engineTemp: 0,
+    oilPressure: 0,
+    brakeSystem: 0,
+    tirePressure: 0,
+    lastUpdate: "Loading...",
+    isConnected: false,
   });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
-  // Simulate real-time data updates every 10 seconds
+  // API endpoints for vehicle data
+  const API_BASE_URL = 'http://localhost:3001/api';
+  
+  const fetchVehicleData = async () => {
+    try {
+      setError(null);
+      const response = await fetch(`${API_BASE_URL}/vehicle/status`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      setVehicleData({
+        batteryLevel: data.battery?.level || 0,
+        batteryTemp: data.battery?.temperature || 0,
+        engineTemp: data.engine?.temperature || 0,
+        oilPressure: data.engine?.oilPressure || 0,
+        brakeSystem: data.brakes?.fluidLevel || 0,
+        tirePressure: data.tires?.pressure || 0,
+        lastUpdate: new Date().toLocaleTimeString(),
+        isConnected: true,
+      });
+      setIsLoading(false);
+    } catch (err) {
+      console.error('Failed to fetch vehicle data:', err);
+      setError(err instanceof Error ? err.message : 'Failed to fetch data');
+      setVehicleData(prev => ({ ...prev, isConnected: false }));
+      
+      toast({
+        variant: "destructive",
+        title: "Connection Error",
+        description: "Failed to connect to vehicle API. Please check if the server is running on localhost:3001",
+      });
+      setIsLoading(false);
+    }
+  };
+
+  // Fetch data on component mount and set up real-time updates every 10 seconds
   useEffect(() => {
+    fetchVehicleData();
+    
     const interval = setInterval(() => {
-      setVehicleData(prev => ({
-        ...prev,
-        batteryLevel: Math.max(10, Math.min(100, prev.batteryLevel + (Math.random() - 0.5) * 2)),
-        batteryTemp: Math.max(20, Math.min(45, prev.batteryTemp + (Math.random() - 0.5) * 2)),
-        engineTemp: Math.max(180, Math.min(220, prev.engineTemp + (Math.random() - 0.5) * 5)),
-        oilPressure: Math.max(30, Math.min(60, prev.oilPressure + (Math.random() - 0.5) * 3)),
-        brakeSystem: Math.max(5, Math.min(100, prev.brakeSystem + (Math.random() - 0.5) * 1)),
-        tirePressure: Math.max(25, Math.min(35, prev.tirePressure + (Math.random() - 0.5) * 1)),
-        lastUpdate: "Now",
-      }));
+      fetchVehicleData();
     }, 10000);
 
     return () => clearInterval(interval);
