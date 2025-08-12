@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
 import { Search } from "lucide-react";
 
 interface VehicleResult {
@@ -9,53 +8,40 @@ interface VehicleResult {
   label?: string;
 }
 
+const VIN_LIST: VehicleResult[] = [
+  { vin: "5YJ3E1EA7KF317000", label: "Tesla Model 3 · 2019" },
+  { vin: "1HGCM82633A004352", label: "Honda Accord · 2003" },
+  { vin: "JTDKB20U793123456", label: "Toyota Prius · 2009" },
+  { vin: "1FADP3F22EL123456", label: "Ford Focus · 2014" },
+  { vin: "WDDGF8AB4EA123456", label: "Mercedes C250 · 2014" },
+];
+
 export function VinSearch({ onSelectVin }: { onSelectVin: (vin: string) => void }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<VehicleResult[]>([]);
   const [loading, setLoading] = useState(false);
-  const abortRef = useRef<AbortController | null>(null);
-  const { toast } = useToast();
 
-  const API_BASE_URL = 'http://localhost:3001/api';
+  
 
   useEffect(() => {
     if (query.trim().length < 3) {
       setResults([]);
-      if (abortRef.current) abortRef.current.abort();
+      setLoading(false);
       return;
     }
 
-    const handler = setTimeout(async () => {
-      try {
-        setLoading(true);
-        if (abortRef.current) abortRef.current.abort();
-        const controller = new AbortController();
-        abortRef.current = controller;
-
-        const res = await fetch(`${API_BASE_URL}/vehicles/search?q=${encodeURIComponent(query)}` , { signal: controller.signal });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-        // Accept either array of strings or objects
-        const list: VehicleResult[] = Array.isArray(data)
-          ? data.map((item: any) => (typeof item === 'string' ? { vin: item } : { vin: item.vin, label: item.label }))
-          : [];
-        setResults(list);
-      } catch (err: any) {
-        if (err?.name !== 'AbortError') {
-          console.error('VIN search failed:', err);
-          toast({
-            variant: "destructive",
-            title: "Search failed",
-            description: "Could not reach the API at localhost:3001",
-          });
-        }
-      } finally {
-        setLoading(false);
-      }
-    }, 300);
+    const handler = setTimeout(() => {
+      setLoading(true);
+      const q = query.trim().toLowerCase();
+      const filtered = VIN_LIST.filter(v =>
+        v.vin.toLowerCase().includes(q) || v.label?.toLowerCase().includes(q)
+      ).slice(0, 10);
+      setResults(filtered);
+      setLoading(false);
+    }, 200);
 
     return () => clearTimeout(handler);
-  }, [query, toast]);
+  }, [query]);
 
   const handleSelect = (vin: string) => {
     onSelectVin(vin);
