@@ -41,17 +41,17 @@ export default function Dashboard() {
             {/* Hero: Advanced Vehicle Monitoring */}
             <Card className="relative overflow-hidden">
               <div
-                className="h-56 md:h-64 bg-gradient-to-r from-primary to-accent flex items-center justify-start px-8"
+                className="relative h-56 md:h-64 flex items-center justify-start px-8"
                 style={{
                   backgroundImage: `url(${vehicleHeroImage})`,
                   backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundBlendMode: 'overlay'
+                  backgroundPosition: 'center'
                 }}
               >
-                <div className="text-white space-y-2 max-w-xl">
-                  <h2 className="text-3xl md:text-4xl font-bold">Advanced Vehicle Monitoring</h2>
-                  <p className="text-base md:text-lg opacity-90">
+                <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 to-background/10" aria-hidden="true" />
+                <div className="relative z-10 space-y-2 max-w-xl">
+                  <h2 className="text-3xl md:text-4xl font-bold text-foreground">Advanced Vehicle Monitoring</h2>
+                  <p className="text-base md:text-lg text-muted-foreground">
                     Real-time system diagnostics, predictive insights, and AI assistance.
                   </p>
                 </div>
