@@ -10,7 +10,7 @@ interface Alert {
   timestamp: string;
 }
 
-export function HealthAlerts() {
+export function HealthAlerts({ vin }: { vin: string }) {
   const alerts: Alert[] = [
     {
       id: "1",

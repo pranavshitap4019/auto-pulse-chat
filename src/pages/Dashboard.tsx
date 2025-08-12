@@ -6,9 +6,12 @@ import { ChatBot } from "@/components/ChatBot";
 import { PredictiveAnalytics } from "@/components/PredictiveAnalytics";
 import { Card, CardContent } from "@/components/ui/card";
 import { Settings, BarChart3, Home, Bot } from "lucide-react";
+import { FleetSummary } from "@/components/FleetSummary";
+import { VinSearch } from "@/components/VinSearch";
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [selectedVin, setSelectedVin] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-background">
@@ -34,15 +37,32 @@ export default function Dashboard() {
           </TabsList>
 
           <TabsContent value="dashboard" className="space-y-8">
-            <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
-              <div className="xl:col-span-3">
-                <VehicleDashboard />
-              </div>
-              <div className="xl:col-span-1">
-                <HealthAlerts />
-              </div>
+            <FleetSummary />
+            <div>
+              <VinSearch onSelectVin={(vin) => setSelectedVin(vin)} />
             </div>
+
+            {selectedVin ? (
+              <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
+                <div className="xl:col-span-3">
+                  <VehicleDashboard vin={selectedVin} />
+                </div>
+                <div className="xl:col-span-1">
+                  <HealthAlerts vin={selectedVin} />
+                </div>
+              </div>
+            ) : (
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="font-semibold mb-2">Select a vehicle</h3>
+                  <p className="text-muted-foreground">
+                    Search and select a VIN to view system status and health alerts.
+                  </p>
+                </CardContent>
+              </Card>
+            )}
           </TabsContent>
+
 
           <TabsContent value="predictive">
             <PredictiveAnalytics />

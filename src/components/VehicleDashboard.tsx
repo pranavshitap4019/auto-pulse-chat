@@ -17,7 +17,7 @@ interface VehicleData {
   isConnected: boolean;
 }
 
-export function VehicleDashboard() {
+export function VehicleDashboard({ vin }: { vin: string }) {
   const [vehicleData, setVehicleData] = useState<VehicleData>({
     batteryLevel: 0,
     batteryTemp: 0,
@@ -38,7 +38,7 @@ export function VehicleDashboard() {
   const fetchVehicleData = async () => {
     try {
       setError(null);
-      const response = await fetch(`${API_BASE_URL}/vehicle/status`);
+      const response = await fetch(`${API_BASE_URL}/vehicle/status?vin=${encodeURIComponent(vin)}`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -80,7 +80,7 @@ export function VehicleDashboard() {
     }, 10000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [vin]);
 
   const getStatusForMetric = (value: number, thresholds: { healthy: number; warning: number }) => {
     if (value >= thresholds.healthy) return "healthy";
