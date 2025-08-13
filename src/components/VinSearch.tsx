@@ -20,17 +20,13 @@ export function VinSearch({ onSelectVin }: { onSelectVin: (vin: string) => void 
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<VehicleResult[]>([]);
   const [loading, setLoading] = useState(false);
-  const [justSelected, setJustSelected] = useState(false);
 
   
 
   useEffect(() => {
-    if (query.trim().length < 3 || justSelected) {
+    if (query.trim().length < 3) {
       setResults([]);
       setLoading(false);
-      if (justSelected) {
-        setJustSelected(false);
-      }
       return;
     }
 
@@ -45,10 +41,9 @@ export function VinSearch({ onSelectVin }: { onSelectVin: (vin: string) => void 
     }, 200);
 
     return () => clearTimeout(handler);
-  }, [query, justSelected]);
+  }, [query]);
 
   const handleSelect = (vin: string) => {
-    setJustSelected(true);
     onSelectVin(vin);
     setQuery(vin);
     setResults([]);
