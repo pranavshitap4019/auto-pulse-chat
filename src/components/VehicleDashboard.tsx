@@ -93,7 +93,7 @@ export function VehicleDashboard({ vin }: { vin: string }) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Vehicle Health Dashboard</h1>
+          <h1 className="text-3xl font-bold text-foreground">VIN: {vin}</h1>
           <p className="text-muted-foreground mt-1">Real-time monitoring and diagnostics</p>
         </div>
         <div className="flex items-center gap-4">
@@ -110,25 +110,6 @@ export function VehicleDashboard({ vin }: { vin: string }) {
         </div>
       </div>
 
-      {/* Hero Section */}
-      <Card className="relative overflow-hidden">
-        <div 
-          className="h-64 bg-gradient-to-r from-primary to-accent flex items-center justify-start px-8"
-          style={{
-            backgroundImage: `url(${vehicleHeroImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundBlendMode: 'overlay'
-          }}
-        >
-          <div className="text-white space-y-2 max-w-lg">
-            <h2 className="text-4xl font-bold">Advanced Vehicle Monitoring</h2>
-            <p className="text-lg opacity-90">
-              Real-time health status, predictive maintenance alerts, and AI-powered assistance
-            </p>
-          </div>
-        </div>
-      </Card>
 
       {/* System Status Overview */}
       <div>
