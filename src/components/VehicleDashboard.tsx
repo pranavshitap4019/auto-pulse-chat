@@ -94,7 +94,6 @@ export function VehicleDashboard({ vin }: { vin: string }) {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-foreground">VIN: {vin}</h1>
-          <p className="text-muted-foreground mt-1">Real-time monitoring and diagnostics</p>
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
@@ -117,7 +116,6 @@ export function VehicleDashboard({ vin }: { vin: string }) {
           <Gauge className="h-6 w-6" />
           System Status Overview
         </h2>
-        <p className="text-muted-foreground mb-6">Monitor all critical vehicle systems in real-time</p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <VehicleMetricCard
