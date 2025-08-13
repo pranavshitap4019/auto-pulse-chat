@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StatusBadge, StatusType } from "./StatusBadge";
 import { AlertTriangle, Info, AlertCircle, Bell } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface Alert {
   id: string;
@@ -11,29 +13,41 @@ interface Alert {
 }
 
 export function HealthAlerts({ vin }: { vin: string }) {
-  const alerts: Alert[] = [
-    {
-      id: "1",
-      type: "warning",
-      system: "Battery System",
-      message: "Battery temperature slightly elevated",
-      timestamp: "2024-01-15 14:30:00",
-    },
-    {
-      id: "2",
-      type: "info",
-      system: "Engine",
-      message: "Engine oil pressure within normal range",
-      timestamp: "2024-01-15 14:25:00",
-    },
-    {
-      id: "3",
-      type: "critical",
-      system: "Brake System",
-      message: "Brake pad wear detected - service required",
-      timestamp: "2024-01-15 14:20:00",
-    },
-  ];
+  const [alerts, setAlerts] = useState<Alert[]>([]);
+  const { toast } = useToast();
+
+  const API_BASE_URL = 'http://localhost:3001/api';
+
+  useEffect(() => {
+    const fetchAlerts = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/vehicle/alerts?vin=${vin}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        setAlerts(data.alerts || []);
+      } catch (err) {
+        console.error("Failed to fetch health alerts:", err);
+        toast({
+          variant: "destructive",
+          title: "Health alerts unavailable",
+          description: "Could not connect to the API at localhost:3001",
+        });
+      }
+    };
+
+    if (vin) {
+      // Initial fetch
+      fetchAlerts();
+      
+      // Set up continuous fetching every 5 seconds
+      const interval = setInterval(() => {
+        fetchAlerts();
+      }, 5000);
+
+      // Cleanup interval on component unmount
+      return () => clearInterval(interval);
+    }
+  }, [vin, toast]);
 
   const getIcon = (type: StatusType) => {
     switch (type) {
