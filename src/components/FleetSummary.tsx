@@ -40,7 +40,16 @@ export function FleetSummary() {
       }
     };
 
+    // Initial fetch
     fetchSummary();
+    
+    // Set up continuous fetching every 10 seconds
+    const interval = setInterval(() => {
+      fetchSummary();
+    }, 10000);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(interval);
   }, [toast]);
 
   return (
