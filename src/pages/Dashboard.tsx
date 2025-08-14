@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { VehicleDashboard } from "@/components/VehicleDashboard";
 import { HealthAlerts } from "@/components/HealthAlerts";
@@ -14,6 +14,11 @@ import vehicleHeroImage from "@/assets/vehicle-dashboard-hero.jpg";
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [selectedVin, setSelectedVin] = useState<string | null>(null);
+
+  // Reset VIN selection when switching tabs
+  useEffect(() => {
+    setSelectedVin(null);
+  }, [activeTab]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -64,7 +69,7 @@ export default function Dashboard() {
             </Card>
             <FleetSummary />
             <div>
-              <VinSearch onSelectVin={(vin) => setSelectedVin(vin)} />
+              <VinSearch key={activeTab} onSelectVin={(vin) => setSelectedVin(vin)} />
             </div>
 
             {selectedVin ? (
