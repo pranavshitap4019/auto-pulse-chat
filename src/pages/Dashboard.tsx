@@ -5,9 +5,10 @@ import { HealthAlerts } from "@/components/HealthAlerts";
 import { ChatBot } from "@/components/ChatBot";
 import { PredictiveAnalytics } from "@/components/PredictiveAnalytics";
 import { Card, CardContent } from "@/components/ui/card";
-import { Settings, BarChart3, Home, Bot } from "lucide-react";
+import { Settings, BarChart3, Home, Bot, Stethoscope } from "lucide-react";
 import { FleetSummary } from "@/components/FleetSummary";
 import { VinSearch } from "@/components/VinSearch";
+import { DiagnosticsView } from "@/components/DiagnosticsView";
 import vehicleHeroImage from "@/assets/vehicle-dashboard-hero.jpg";
 
 export default function Dashboard() {
@@ -18,10 +19,14 @@ export default function Dashboard() {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="dashboard" className="flex items-center gap-2">
               <Home className="h-4 w-4" />
               Dashboard
+            </TabsTrigger>
+            <TabsTrigger value="diagnostics" className="flex items-center gap-2">
+              <Stethoscope className="h-4 w-4" />
+              Diagnostics
             </TabsTrigger>
             <TabsTrigger value="predictive" className="flex items-center gap-2">
               <BarChart3 className="h-4 w-4" />
@@ -83,6 +88,9 @@ export default function Dashboard() {
             )}
           </TabsContent>
 
+          <TabsContent value="diagnostics">
+            <DiagnosticsView />
+          </TabsContent>
 
           <TabsContent value="predictive">
             <PredictiveAnalytics />
