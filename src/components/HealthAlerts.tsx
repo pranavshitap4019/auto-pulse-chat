@@ -27,10 +27,41 @@ export function HealthAlerts({ vin }: { vin: string }) {
         setAlerts(data.alerts || []);
       } catch (err) {
         console.error("Failed to fetch health alerts:", err);
+        // Use dummy demo data when API fails
+        setAlerts([
+          {
+            id: "1",
+            type: "critical",
+            system: "Engine",
+            message: "Engine temperature above normal range. Immediate attention required.",
+            timestamp: "2024-01-15 10:30:00"
+          },
+          {
+            id: "2",
+            type: "warning",
+            system: "Battery",
+            message: "Battery voltage low. Consider charging soon.",
+            timestamp: "2024-01-15 09:45:00"
+          },
+          {
+            id: "3",
+            type: "info",
+            system: "Maintenance",
+            message: "Regular service due in 500 miles.",
+            timestamp: "2024-01-15 08:15:00"
+          },
+          {
+            id: "4",
+            type: "warning",
+            system: "Tires",
+            message: "Front left tire pressure below recommended level.",
+            timestamp: "2024-01-15 07:20:00"
+          }
+        ]);
         toast({
           variant: "destructive",
-          title: "Health alerts unavailable",
-          description: "Could not connect to the API at localhost:3001",
+          title: "Using demo data",
+          description: "Could not connect to API. Showing sample health alerts.",
         });
       }
     };
