@@ -20,11 +20,10 @@ export function VinSearch({ onSelectVin }: { onSelectVin: (vin: string) => void 
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<VehicleResult[]>([]);
   const [loading, setLoading] = useState(false);
-
-  
+  const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
-    if (query.trim().length < 3) {
+    if (!showResults) {
       setResults([]);
       setLoading(false);
       return;
@@ -33,20 +32,22 @@ export function VinSearch({ onSelectVin }: { onSelectVin: (vin: string) => void 
     const handler = setTimeout(() => {
       setLoading(true);
       const q = query.trim().toLowerCase();
-      const filtered = VIN_LIST.filter(v =>
-        v.vin.toLowerCase().includes(q) || v.label?.toLowerCase().includes(q)
-      ).slice(0, 10);
+      const filtered = q 
+        ? VIN_LIST.filter(v =>
+            v.vin.toLowerCase().includes(q) || v.label?.toLowerCase().includes(q)
+          ).slice(0, 10)
+        : VIN_LIST.slice(0, 10);
       setResults(filtered);
       setLoading(false);
     }, 200);
 
     return () => clearTimeout(handler);
-  }, [query]);
+  }, [query, showResults]);
 
   const handleSelect = (vin: string) => {
     onSelectVin(vin);
     setQuery(vin);
-    setResults([]);
+    setShowResults(false);
   };
 
   return (
@@ -59,7 +60,9 @@ export function VinSearch({ onSelectVin }: { onSelectVin: (vin: string) => void 
         <Input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Enter VIN (min 3 characters)"
+          onFocus={() => setShowResults(true)}
+          onBlur={() => setTimeout(() => setShowResults(false), 150)}
+          placeholder="Enter VIN or click to browse"
           aria-label="VIN search"
         />
         {loading && (
