@@ -11,7 +11,7 @@ interface VehicleResult {
 const VIN_LIST: VehicleResult[] = [
   { vin: "5YJ3E1EA7KF317000", label: "Tesla Model 3 · 2019" },
   { vin: "1HGCM82633A004352", label: "Honda Accord · 2003" },
-  { vin: "JTDKB20U793123456", label: "Toyota Prius · 2009" },
+  { vin: "JTDKB20U793123456", label: "TCS Car · 2025" },
   { vin: "1FADP3F22EL123456", label: "Ford Focus · 2014" },
   { vin: "WDDGF8AB4EA123456", label: "Mercedes C250 · 2014" },
 ];
