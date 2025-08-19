@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Car, CheckCircle2, AlertTriangle, AlertCircle } from "lucide-react";
+import { VehicleData, getDummyFleetSummary } from "@/data/vehicleData";
 
 interface FleetSummaryData {
   total: number;
   healthy: number;
   warning: number;
   critical: number;
+  vehicles?: VehicleData[];
 }
 
 export function FleetSummary() {
@@ -29,13 +31,17 @@ export function FleetSummary() {
           healthy: data.healthy ?? 0,
           warning,
           critical: data.critical ?? 0,
+          vehicles: data.vehicles ?? []
         });
       } catch (err) {
         console.error("Failed to fetch fleet summary:", err);
+        // Use dummy data when API fails
+        const dummyData = getDummyFleetSummary();
+        setSummary(dummyData);
         toast({
           variant: "destructive",
           title: "Fleet summary unavailable",
-          description: "Could not connect to the API at localhost:3001",
+          description: "Using demo data - Could not connect to the API at localhost:3001",
         });
       }
     };
