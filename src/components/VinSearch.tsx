@@ -76,7 +76,7 @@ export function VinSearch({ onSelectVin }: { onSelectVin: (vin: string) => void 
           variant={statusFilter === 'all' ? 'default' : 'outline'}
           size="sm"
           onClick={() => setStatusFilter('all')}
-          className="hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-black dark:hover:text-white"
+          className="hover:bg-gray-200 dark:hover:bg-gray-800"
         >
           All
         </Button>
@@ -84,7 +84,7 @@ export function VinSearch({ onSelectVin }: { onSelectVin: (vin: string) => void 
           variant={statusFilter === 'healthy' ? 'default' : 'outline'}
           size="sm"
           onClick={() => setStatusFilter('healthy')}
-          className="gap-1 hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-black dark:hover:text-white"
+          className="gap-1 hover:bg-gray-200 dark:hover:bg-gray-800"
         >
           <CheckCircle2 className="h-3 w-3" />
           Healthy
@@ -93,7 +93,7 @@ export function VinSearch({ onSelectVin }: { onSelectVin: (vin: string) => void 
           variant={statusFilter === 'warning' ? 'default' : 'outline'}
           size="sm"
           onClick={() => setStatusFilter('warning')}
-          className="gap-1 hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-black dark:hover:text-white"
+          className="gap-1 hover:bg-gray-200 dark:hover:bg-gray-800"
         >
           <AlertCircle className="h-3 w-3" />
           Warning
@@ -102,7 +102,7 @@ export function VinSearch({ onSelectVin }: { onSelectVin: (vin: string) => void 
           variant={statusFilter === 'critical' ? 'default' : 'outline'}
           size="sm"
           onClick={() => setStatusFilter('critical')}
-          className="gap-1 hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-black dark:hover:text-white"
+          className="gap-1 hover:bg-gray-200 dark:hover:bg-gray-800"
         >
           <AlertTriangle className="h-3 w-3" />
           Critical
