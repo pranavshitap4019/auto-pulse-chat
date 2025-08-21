@@ -36,8 +36,8 @@ export function HealthAlerts({ vin }: { vin: string }) {
           {
             id: "1",
             type: "critical",
-            system: "Engine",
-            message: "Engine temperature above normal range. Immediate attention required.",
+            system: "Camera",
+            message: "BA200 - Faulty Lens reported. ADAS system is not able to recieve video stream correctly. Immediate attention required.",
             timestamp: "2024-01-15 10:30:00"
           },
           {
