@@ -20,12 +20,12 @@ export function HealthAlerts({ vin }: { vin: string }) {
   const [loadingRecommendations, setLoadingRecommendations] = useState<Set<string>>(new Set());
   const { toast } = useToast();
 
-  const API_BASE_URL = 'http://localhost:3001/api';
+  const API_BASE_URL = 'https://sovdserver.pagekite.me';//  http://localhost:3001/api
 
   useEffect(() => {
     const fetchAlerts = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/vehicle/alerts?vin=${vin}`);
+        const res = await fetch(`${API_BASE_URL}/functions/GetSystemAlerts`);// vehicle/alerts?vin=${vin}
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         setAlerts(data.alerts || []);
