@@ -140,6 +140,14 @@ export function HealthAlerts({ vin }: { vin: string }) {
         return <AlertCircle className="h-4 w-4" />;
       case "info":
         return <Info className="h-4 w-4" />;
+      case "confirmed":
+        return <AlertCircle className="h-4 w-4 text-green-600" />;
+      case "confirmed warning":
+        return <AlertCircle className="h-4 w-4 text-orange-500" />;
+      case "intermittent":
+        return <AlertTriangle className="h-4 w-4 text-purple-500" />; 
+      case "historic":
+        return <Clock className="h-4 w-4 text-gray-500" />;
       default:
         return <Bell className="h-4 w-4" />;
     }
