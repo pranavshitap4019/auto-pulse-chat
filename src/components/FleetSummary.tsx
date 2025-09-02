@@ -16,12 +16,12 @@ export function FleetSummary() {
   const [summary, setSummary] = useState<FleetSummaryData>({ total: 0, healthy: 0, warning: 0, critical: 0 });
   const { toast } = useToast();
 
-  const API_BASE_URL = 'http://localhost:3001/api';
+  const API_BASE_URL = 'https://sovdserver.pagekite.me'; // http://localhost:3001/api
 
   useEffect(() => {
     const fetchSummary = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/fleet/summary`);
+        const res = await fetch(`${API_BASE_URL}/functions/FleetSummary`); // fleet/summary
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         const warning =
