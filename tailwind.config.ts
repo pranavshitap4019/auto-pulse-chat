@@ -59,7 +59,9 @@ export default {
 					warning: 'hsl(var(--status-warning))',
 					'warning-foreground': 'hsl(var(--status-warning-foreground))',
 					critical: 'hsl(var(--status-critical))',
-					'critical-foreground': 'hsl(var(--status-critical-foreground))'
+					'critical-foreground': 'hsl(var(--status-critical-foreground))',
+					confirmed: 'hsl(var(--status-confirmed))',
+					'confirmed-foreground': 'hsl(var(--status-confirmed-foreground))'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
