@@ -30,6 +30,14 @@
     --status-warning-foreground: 0 0% 100%;
     --status-critical: 0 85% 60%;
     --status-critical-foreground: 0 0% 100%;
+    --status-confirmed: 160 70% 45%;
+    --status-confirmed-foreground: 0 0% 100%;
+    --status-confirmed-warning: 30 100% 50%;
+    --status-confirmed-warning-foreground: 0 0% 100%;
+    --status-intermittent: 260 70% 60%;
+    --status-intermittent-foreground: 0 0% 100%;
+    --status-historic: 220 10% 60%;
+    --status-historic-foreground: 0 0% 100%;
 
     /* Muted elements */
     --muted: 220 15% 95%;
