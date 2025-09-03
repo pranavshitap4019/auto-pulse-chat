@@ -33,12 +33,12 @@ export function VehicleDashboard({ vin }: { vin: string }) {
   const { toast } = useToast();
 
   // API endpoints for vehicle data
-  const API_BASE_URL = 'http://localhost:3001/api';
+  const API_BASE_URL = 'https://sovdserver.pagekite.me';//http://localhost:3001/api
   
   const fetchVehicleData = async () => {
     try {
       setError(null);
-      const response = await fetch(`${API_BASE_URL}/vehicle/status?vin=${encodeURIComponent(vin)}`);
+      const response = await fetch(`${API_BASE_URL}/functions/GetSystemStatus`); //vehicle/status?vin=${encodeURIComponent(vin)}
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
