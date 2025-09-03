@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-export type StatusType = "healthy" | "warning" | "critical" | "info";
+export type StatusType = "healthy" | "warning" | "critical" | "info" | "confirmed" ;
 
 interface StatusBadgeProps {
   status: StatusType;
@@ -13,6 +13,7 @@ const statusStyles = {
   warning: "bg-status-warning text-status-warning-foreground",
   critical: "bg-status-critical text-status-critical-foreground",
   info: "bg-primary text-primary-foreground",
+  confirmed: "bg-status-confirmed text-status-confirmed-foreground"
 };
 
 export function StatusBadge({ status, children, className }: StatusBadgeProps) {
